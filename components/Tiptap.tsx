@@ -2,22 +2,53 @@
 
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import { Toolbar } from './Toolbar';
 
-const Tiptap = () => {
+export default function Tiptap({
+  onChange,
+}: {
+  onChange: (richText: string) => void
+}) {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: {
+          HTMLAttributes: {
+            class: 'text-xl font-bold',
+            levels: [2]
+          }
+        },
+        bold: {
+          HTMLAttributes: {
+            class: 'font-bold',
+          }
+        },
+        italic: {
+          HTMLAttributes: {
+            class: 'italic',
+          }
+        },
+        strike: {
+          HTMLAttributes: {
+            class: 'line-through',
+          }
+        },
+      }),
     ],
     editorProps: {
       attributes: {
-        class: "flex flex-col px-4 py-3 justify-start border border-l border-gray-700 items-start h-[80vh] gap-3 font-medium text-[16px] pt-4 rounded-bl-md rounded-br-md outline-none m-10",
+        class: "p-6 rounded-md border min-h-[600px] border-input",
       }
+    },
+    onUpdate({ editor }) {
+      onChange(editor.getHTML())
     }
   })
 
   return (
-    <EditorContent editor={editor} />
+    <div className='mx-10'>
+      <Toolbar editor={editor} />
+      <EditorContent editor={editor} />
+    </div>
   )
 }
-
-export default Tiptap;

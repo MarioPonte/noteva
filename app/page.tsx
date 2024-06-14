@@ -1,10 +1,18 @@
 "use client";
 
 import Tiptap from "@/components/Tiptap";
-import { useForm } from "react-hook-form";
+import { FormControl, FormField, FormItem } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useForm } from "react-hook-form";
+import * as z from "zod";
 
 export default function Home() {
-  const form = useForm({
+  const formSchema = z.object({
+    editor: z.string(),
+  })
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
       editor: "",
@@ -12,12 +20,21 @@ export default function Home() {
   })
   return (
     <section>
-      <form>
-        <h1 className="text-3xl text-center mb-10">
-          Noteva
-        </h1>
-        <Tiptap/>
-      </form>
+        <FormProvider {...form}>
+          <form>
+            <FormField
+              control={form.control}
+              name="editor"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Tiptap onChange={field.onChange} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </form>
+        </FormProvider>
     </section>
   );
 }
