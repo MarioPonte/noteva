@@ -3,6 +3,34 @@
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Toolbar } from './Toolbar';
+import BaseHeading from '@tiptap/extension-heading'
+import { mergeAttributes } from '@tiptap/core'
+import Underline from '@tiptap/extension-underline';
+import TextAlign from '@tiptap/extension-text-align';
+
+type Levels = 1 | 2 | 3 | 4
+
+const classes: Record<Levels, string> = {
+  1: 'text-4xl',
+  2: 'text-3xl',
+  3: 'text-2xl',
+  4: 'text-xl',
+}
+
+export const Heading = BaseHeading.configure({ levels: [1, 2, 3, 4] }).extend({
+  renderHTML({ node, HTMLAttributes }) {
+    const hasLevel = this.options.levels.includes(node.attrs.level)
+    const level: Levels = hasLevel ? node.attrs.level : this.options.levels[0]
+
+    return [
+      `h${level}`,
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+        class: `${classes[level]}`,
+      }),
+      0,
+    ]
+  },
+});
 
 export default function Tiptap({
   onChange,
@@ -12,12 +40,7 @@ export default function Tiptap({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: {
-          HTMLAttributes: {
-            class: 'text-xl font-bold',
-            levels: [2]
-          }
-        },
+        heading: false,
         bold: {
           HTMLAttributes: {
             class: 'font-bold',
@@ -34,6 +57,32 @@ export default function Tiptap({
           }
         },
       }),
+      Heading.configure({ levels: [1, 2, 3, 4] }).extend({
+        levels: [1, 2, 3, 4],
+        renderHTML({ node, HTMLAttributes }) {
+          const level = this.options.levels.includes(node.attrs.level) 
+            ? node.attrs.level 
+            : this.options.levels[0]
+          const classes: any = {
+            1: 'text-4xl',
+            2: 'text-3xl',
+            3: 'text-2xl',
+            4: 'text-xl',
+          }
+          return [
+            `h${level}`,
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+              class: `${classes[level]} font-bold`,
+            }),
+            0,
+          ]
+        },
+      }),
+      Underline,
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+        alignments: ['left', 'right', 'center'],
+      })
     ],
     editorProps: {
       attributes: {
