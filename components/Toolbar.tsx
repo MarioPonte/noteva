@@ -9,11 +9,13 @@ import {
     AlignLeft,
     AlignCenter,
     AlignRight,
+    AlignJustify,
     Undo2,
     Redo2,
 } from "lucide-react";
 import { Toggle } from "./ui/toggle";
 import { HeadingOptions } from "./HeadingOptions";
+import { Header } from "./Header";
 
 type Props = {
     editor: Editor | null
@@ -25,8 +27,10 @@ export function Toolbar({ editor }: Props) {
     }
 
     return (
-        <div className="border border-input bg-transparent rounded-md my-4 p-2">
-            <div className="flex gap-1">
+        <div className="border border-input bg-transparent rounded-md my-4">
+            <Header/>
+            <hr />
+            <div className="flex gap-1 p-2">
                 <HeadingOptions editor={editor} />
                 <Toggle
                     size="sm"
@@ -77,6 +81,13 @@ export function Toolbar({ editor }: Props) {
                     onPressedChange={() => editor.chain().focus().setTextAlign('right').run()}
                 >
                     <AlignRight className="h-4 w-4" />
+                </Toggle>
+                <Toggle
+                    size="sm"
+                    pressed={editor.isActive({ textAlign: 'justify' })}
+                    onPressedChange={() => editor.chain().focus().setTextAlign('justify').run()}
+                >
+                    <AlignJustify className="h-4 w-4" />
                 </Toggle>
 
                 <Toggle

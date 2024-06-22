@@ -81,7 +81,7 @@ export default function Tiptap({
       Underline,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
-        alignments: ['left', 'right', 'center'],
+        alignments: ['left', 'right', 'center', 'justify'],
       })
     ],
     editorProps: {
