@@ -79,3 +79,13 @@
 .ProseMirror:focus {
   outline: none;
 }
+
+.ProseMirror ul {
+  padding: 0 1rem;
+  list-style: disc !important;
+}
+
+.ProseMirror ol {
+  padding: 0 1rem;
+  list-style: decimal !important;
+}

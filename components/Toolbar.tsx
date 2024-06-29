@@ -6,25 +6,22 @@ import {
     Strikethrough,
     Underline,
     Italic,
-    AlignLeft,
-    AlignCenter,
-    AlignRight,
-    AlignJustify,
+    List,
+    ListOrdered,
     Undo2,
     Redo2,
 } from "lucide-react";
 import { Toggle } from "./ui/toggle";
 import { HeadingOptions } from "./HeadingOptions";
 import { Header } from "./Header";
+import { TextAlignOptions } from "./TextAlignOptions";
 
 type Props = {
     editor: Editor | null
 }
 
 export function Toolbar({ editor }: Props) {
-    if (!editor) {
-        return null;
-    }
+    if (!editor) return null;
 
     return (
         <div className="border border-input bg-transparent rounded-md my-4">
@@ -63,32 +60,20 @@ export function Toolbar({ editor }: Props) {
 
                 <Toggle
                     size="sm"
-                    pressed={editor.isActive({ textAlign: 'left' })}
-                    onPressedChange={() => editor.chain().focus().setTextAlign('left').run()}
+                    pressed={editor.isActive("bulletList")}
+                    onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
                 >
-                    <AlignLeft className="h-4 w-4" />
+                    <List className="h-4 w-4" />
                 </Toggle>
                 <Toggle
                     size="sm"
-                    pressed={editor.isActive({ textAlign: 'center' })}
-                    onPressedChange={() => editor.chain().focus().setTextAlign('center').run()}
+                    pressed={editor.isActive("orderedList")}
+                    onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
                 >
-                    <AlignCenter className="h-4 w-4" />
+                    <ListOrdered className="h-4 w-4" />
                 </Toggle>
-                <Toggle
-                    size="sm"
-                    pressed={editor.isActive({ textAlign: 'right' })}
-                    onPressedChange={() => editor.chain().focus().setTextAlign('right').run()}
-                >
-                    <AlignRight className="h-4 w-4" />
-                </Toggle>
-                <Toggle
-                    size="sm"
-                    pressed={editor.isActive({ textAlign: 'justify' })}
-                    onPressedChange={() => editor.chain().focus().setTextAlign('justify').run()}
-                >
-                    <AlignJustify className="h-4 w-4" />
-                </Toggle>
+
+                <TextAlignOptions editor={editor} />
 
                 <Toggle
                     size="sm"
