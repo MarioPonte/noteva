@@ -7,6 +7,8 @@ import BaseHeading from '@tiptap/extension-heading'
 import { mergeAttributes } from '@tiptap/core'
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
+import Superscript from '@tiptap/extension-superscript';
+import Subscript from '@tiptap/extension-subscript';
 
 type Levels = 1 | 2 | 3 | 4
 
@@ -79,6 +81,8 @@ export default function Tiptap({
         },
       }),
       Underline,
+      Superscript,
+      Subscript,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
         alignments: ['left', 'right', 'center', 'justify'],
@@ -95,7 +99,7 @@ export default function Tiptap({
   })
 
   return (
-    <div className='mx-10'>
+    <div className='mx-4 sm:mx-10'>
       <Toolbar editor={editor} />
       <EditorContent editor={editor} />
     </div>
