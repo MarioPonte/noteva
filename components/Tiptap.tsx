@@ -3,8 +3,9 @@
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Toolbar } from './Toolbar';
-import BaseHeading from '@tiptap/extension-heading'
-import { mergeAttributes } from '@tiptap/core'
+import BaseHeading from '@tiptap/extension-heading';
+import HardBreak from '@tiptap/extension-hard-break'
+import { mergeAttributes } from '@tiptap/core';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
@@ -81,6 +82,7 @@ export default function Tiptap({
         },
       }),
       Underline,
+      HardBreak,
       Superscript,
       Subscript,
       TextAlign.configure({

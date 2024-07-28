@@ -12,6 +12,7 @@ import {
     Redo2,
     Superscript,
     Subscript,
+    Code,
 } from "lucide-react";
 import { Toggle } from "./ui/toggle";
 import { HeadingOptions } from "./HeadingOptions";
@@ -73,6 +74,14 @@ export function Toolbar({ editor }: Props) {
                     onPressedChange={() => editor.chain().focus().toggleSuperscript().run()}
                 >
                     <Superscript className="h-4 w-4" />
+                </Toggle>
+
+                <Toggle
+                    size="sm"
+                    pressed={editor.isActive("code")}
+                    onPressedChange={() => editor.chain().focus().toggleCode().run()}
+                >
+                    <Code className="h-4 w-4" />
                 </Toggle>
 
                 <Toggle
